@@ -5,7 +5,7 @@ import json
 import re
 
 # define the target directory
-target_dir = r'C:\Users\david\Documents'
+target_dir = os.environ['USERPROFILE'] + r'\Documents'
 tika_server_filepath = os.getcwd() + r'\offline\tika-server-standard-2.9.1.jar'
 
 
@@ -22,6 +22,10 @@ def find_all_matches(pattern, string):
 if os.path.exists(tika_server_filepath) == False:
     print('server_filepath value: {} not found. Exiting'.format(tika_server_filepath))
     quit(1)
+    
+if os.path.exists(target_dir) == False:
+    print('target_dir value: {} not found. Exiting'.format(target_dir))
+    quit(1)    
 
 tika_server_environ_filepath = 'file:////' + tika_server_filepath
 os.environ['TIKA_SERVER_JAR'] = tika_server_environ_filepath
@@ -39,6 +43,7 @@ patterns = {
 }
 
 # walk target folder recursively
+print('Processing target_dir: {} recursively...'.format(target_dir))
 for r, d, f in os.walk(target_dir):
     for file in f:
         filepath = os.path.join(r, file)
