@@ -5,7 +5,6 @@ import json
 import re
 
 # define the target directory
-target_dir = r'C:\Users\david\Documents\work\weeklies'
 target_dir = r'C:\Users\david\Documents'
 tika_server_filepath = os.getcwd() + r'\offline\tika-server-standard-2.9.1.jar'
 
