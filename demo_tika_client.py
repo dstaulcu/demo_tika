@@ -39,7 +39,11 @@ tika.initVM()
 - online resource to produce escaped python code for regex patterns https://www.pythonescaper.com
 '''
 patterns = {
-    "SSN": r'\d{3}\-\d{2}\-\d{4}'
+    "SSN": r'\d{3}\-\d{2}\-\d{4}',
+    "EMAIL": r'\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b',
+    "URL": r'(http|ftp|https)://([\w+?\.\w+])+([a-zA-Z0-9\~\!\@\#\$\%\^\&\*\(\)_\-\=\+\\\/\?\.\:\;\'\,]*)?',
+    "IPADDRESS": r'\b(?:(?:2(?:[0-4][0-9]|5[0-5])|[0-1]?[0-9]?[0-9])\.){3}(?:(?:2([0-4][0-9]|5[0-5])|[0-1]?[0-9]?[0-9]))\b',
+    "GEO": r'^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$'
 }
 
 # walk target folder recursively
@@ -55,7 +59,7 @@ for r, d, f in os.walk(target_dir):
             # check file content for each pattern type
             for key in patterns:
                 # print('-finding {} entries having pattern: "{}"'.format(key, patterns[key]))
-                findings = find_all_matches('(' + patterns[key] + ')', parsed['content'])
+                findings = find_all_matches('(' + patterns[key] + ')\s?', parsed['content'])
                 for finding in findings:
                     # print any of many potential findings
                     print('-found "{}" having value: "{}" in file: "{}"'.format(key, finding, filepath))
